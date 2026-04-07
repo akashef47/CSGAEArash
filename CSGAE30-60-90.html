@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>CSG AE 30–60–90 Plan</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --primary: #0076ce;
+      --primary-soft: #e6f1fb;
+      --accent: #00b5ad;
+      --bg: #0b1520;
+      --bg-elevated: #111c2a;
+      --text: #f5f7fb;
+      --muted: #9fb3c8;
+      --border-subtle: #223044;
+      --danger: #ff6b6b;
+      --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.45);
+      --radius-lg: 18px;
+      --radius-pill: 999px;
+      --transition-fast: 0.2s ease-out;
+      --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: var(--font-sans);
+      background: radial-gradient(circle at top left, #12325f, #050812 52%);
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 16px;
+    }
+
+    .app-shell {
+      width: 100%;
+      max-width: 1080px;
+      background: linear-gradient(145deg, #0b1624, #050912);
+      border-radius: 24px;
+      padding: 24px 24px 18px;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .app-shell::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      opacity: 0.08;
+      background:
+        radial-gradient(circle at 0 0, #0076ce 0, transparent 55%),
+        radial-gradient(circle at 100% 0, #00b5ad 0, transparent 55%);
+      pointer-events: none;
+    }
+
+    .app-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .title-block {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .eyebrow {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    h1 {
+      font-size: 24px;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .pill {
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+      background: rgba(0, 181, 173, 0.14);
+      border: 1px solid rgba(0, 181, 173, 0.32);
+      font-size: 11px;
+      color: var(--muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .pill-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 5px rgba(0, 181, 173, 0.2);
+    }
+
+    .subtitle {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 4px;
+      max-width: 480px;
+    }
+
+    .controls {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: flex-end;
+      min-width: 210px;
+    }
+
+    .day-slider-block {
+      width: 100%;
+      max-width: 260px;
+    }
+
+    .day-label-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .day-output {
+      font-size: 12px;
+      font-weight: 500;
+      text-align: right;
+      color: var(--text);
+    }
+
+    input[type="range"] {
+      width: 100%;
+      -webkit-appearance: none;
+      appearance: none;
+      height: 4px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      outline: none;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #ffffff;
+      border: 2px solid var(--primary);
+      box-shadow: 0 0 0 4px rgba(0, 118, 206, 0.35);
+      cursor: pointer;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+    }
+
+    input[type="range"]::-webkit-slider-thumb:hover {
+      transform: scale(1.06);
+      box-shadow: 0 0 0 6px rgba(0, 118, 206, 0.45);
+    }
+
+    input[type="range"]::-moz-range-thumb {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #ffffff;
+      border: 2px solid var(--primary);
+      box-shadow: 0 0 0 4px rgba(0, 118, 206, 0.35);
+      cursor: pointer;
+    }
+
+    .phase-chips {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .phase-chip {
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-subtle);
+      color: var(--muted);
+      background: rgba(3, 12, 28, 0.7);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .phase-chip span.dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--border-subtle);
+    }
+
+    .phase-chip.active {
+      border-color: var(--accent);
+      color: var(--text);
+      background: rgba(0, 181, 173, 0.12);
+    }
+
+    .phase-chip.active span.dot {
+      background: var(--accent);
+    }
+
+    .timeline {
+      display: flex;
+      gap: 18px;
+      margin-bottom: 18px;
+      padding: 10px 14px;
+      border-radius: var(--radius-lg);
+      background: radial-gradient(circle at top left, #0d223b, #050a14 55%);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .timeline-segment {
+      flex: 1;
+      position: relative;
+      padding-top: 4px;
+      cursor: pointer;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast),
+        border-color var(--transition-fast);
+    }
+
+    .timeline-segment:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.3);
+    }
+
+    .timeline-pill {
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: linear-gradient(135deg, rgba(10, 34, 64, 0.9), rgba(6, 17, 34, 0.9));
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .timeline-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .timeline-range {
+      font-size: 12px;
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .timeline-segment.active .timeline-pill {
+      border-color: var(--primary);
+      background: linear-gradient(135deg, rgba(0, 118, 206, 0.32), rgba(0, 181, 173, 0.3));
+      box-shadow: 0 0 24px rgba(0, 118, 206, 0.45);
+    }
+
+    .timeline-segment.active .timeline-label {
+      color: #dfe8f5;
+    }
+
+    .timeline-progress {
+      position: absolute;
+      left: 12px;
+      right: 12px;
+      bottom: -6px;
+      height: 3px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      overflow: hidden;
+    }
+
+    .timeline-progress-inner {
+      width: 0;
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      transition: width var(--transition-fast);
+    }
+
+    .main {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+      gap: 16px;
+    }
+
+    @media (max-width: 840px) {
+      .app-shell {
+        padding: 18px 14px 14px;
+      }
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .controls {
+        align-items: flex-start;
+      }
+      .phase-chips {
+        justify-content: flex-start;
+      }
+      .main {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .card {
+      background: rgba(8, 17, 33, 0.96);
+      border-radius: var(--radius-lg);
+      padding: 14px 14px 12px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: -30%;
+      opacity: 0.05;
+      background: radial-gradient(circle at top right, #0076ce 0, transparent 55%);
+      pointer-events: none;
+    }
+
+    .card-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .card-title {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .card-badge {
+      font-size: 11px;
+      padding: 3px 9px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(4, 18, 38, 0.9);
+      color: var(--muted);
+    }
+
+    .card-badge strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+
+    .chip {
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: var(--radius-pill);
+      background: rgba(12, 27, 50, 0.82);
+      color: var(--muted);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+    }
+
+    .chip.primary {
+      background: rgba(0, 118, 206, 0.18);
+      color: #e5f1ff;
+      border-color: rgba(0, 118, 206, 0.6);
+    }
+
+    .chip.secondary {
+      background: rgba(0, 181, 173, 0.18);
+      color: #dbfffa;
+      border-color: rgba(0, 181, 173, 0.6);
+    }
+
+    .card-body {
+      font-size: 13px;
+      color: var(--muted);
+      max-height: 280px;
+      overflow: auto;
+      padding-right: 4px;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255, 255, 255, 0.16) transparent;
+    }
+
+    .card-body::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .card-body::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .card-body::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.18);
+      border-radius: 999px;
+    }
+
+    ul.phase-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    ul.phase-list li {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+      padding: 7px 8px;
+      border-radius: 10px;
+      background: rgba(8, 22, 43, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      transition: background var(--transition-fast), border-color var(--transition-fast),
+        transform var(--transition-fast);
+    }
+
+    ul.phase-list li:hover {
+      background: rgba(14, 35, 69, 0.96);
+      border-color: rgba(0, 181, 173, 0.5);
+      transform: translateY(-1px);
+    }
+
+    .bullet-icon {
+      flex: 0 0 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 2px;
+      background: radial-gradient(circle at 30% 20%, #00b5ad, #0076ce);
+      color: #06101f;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .bullet-text {
+      flex: 1;
+      line-height: 1.35;
+      color: #dde7f6;
+    }
+
+    .bullet-meta {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 1px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .summary-tile {
+      padding: 8px 9px;
+      border-radius: 10px;
+      background: rgba(7, 20, 39, 0.96);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .summary-label {
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-size: 10px;
+      color: var(--muted);
+      margin-bottom: 3px;
+    }
+
+    .summary-value {
+      color: #e6f0ff;
+      font-weight: 500;
+    }
+
+    .kpi-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .kpi-pill {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: var(--radius-pill);
+      border: 1px dashed rgba(0, 181, 173, 0.6);
+      color: #baf8f3;
+      background: rgba(0, 181, 173, 0.15);
+    }
+
+    footer {
+      margin-top: 10px;
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      align-items: center;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .legend {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+    }
+
+    .danger-dot {
+      background: var(--danger);
+    }
+
+    .footer-right {
+      text-align: right;
+      font-style: italic;
+    }
+
+    @media (max-width: 600px) {
+      .summary-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      footer {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .footer-right {
+        text-align: left;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <div class="app-inner">
+      <header>
+        <div class="title-block">
+          <div class="eyebrow">CSG ACCOUNT EXECUTIVE</div>
+          <h1>
+            30–60–90 Onboarding Plan
+            <span class="pill">
+              <span class="pill-dot"></span>
+              Focus: Run-Rate, Story, Scale
+            </span>
+          </h1>
+          <div class="subtitle">
+            Navigate your first 90 days in role with a simple, visual breakdown of what
+            to learn, protect, build, and close.
+          </div>
+        </div>
+
+        <div class="controls">
+          <div class="day-slider-block">
+            <div class="day-label-row">
+              <span>Drag to see where you are in the journey</span>
+              <span class="day-output" id="dayOutput">Day 0</span>
+            </div>
+            <input type="range" id="daySlider" min="0" max="90" value="0" />
+          </div>
+          <div class="phase-chips">
+            <div class="phase-chip active" data-phase-chip="30">
+              <span class="dot"></span>
+              Days 0–30: Learn & Protect
+            </div>
+            <div class="phase-chip" data-phase-chip="60">
+              <span class="dot"></span>
+              Days 31–60: Story & Pipeline
+            </div>
+            <div class="phase-chip" data-phase-chip="90">
+              <span class="dot"></span>
+              Days 61–90: Wins & Scale
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="timeline">
+        <div class="timeline-segment active" data-phase="30">
+          <div class="timeline-pill">
+            <div>
+              <div class="timeline-label">Phase 1</div>
+              <div class="timeline-range">Days 0–30</div>
+            </div>
+            <span>Learn & Protect</span>
+          </div>
+          <div class="timeline-progress">
+            <div class="timeline-progress-inner" id="progress30"></div>
+          </div>
+        </div>
+        <div class="timeline-segment" data-phase="60">
+          <div class="timeline-pill">
+            <div>
+              <div class="timeline-label">Phase 2</div>
+              <div class="timeline-range">Days 31–60</div>
+            </div>
+            <span>Story & Pipeline</span>
+          </div>
+          <div class="timeline-progress">
+            <div class="timeline-progress-inner" id="progress60"></div>
+          </div>
+        </div>
+        <div class="timeline-segment" data-phase="90">
+          <div class="timeline-pill">
+            <div>
+              <div class="timeline-label">Phase 3</div>
+              <div class="timeline-range">Days 61–90</div>
+            </div>
+            <span>Wins & Scale</span>
+          </div>
+          <div class="timeline-progress">
+            <div class="timeline-progress-inner" id="progress90"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="main">
+        <section class="card">
+          <div class="card-inner">
+            <div class="card-header">
+              <div class="card-title" id="cardTitle">Phase 1 · Learn Fast, Protect Run-Rate</div>
+              <div class="card-badge">
+                Window: <strong id="cardWindow">Days 0–30</strong>
+              </div>
+            </div>
+            <div class="chip-row" id="chipRow">
+              <span class="chip primary">Run-rate Protection</span>
+              <span class="chip secondary">Customer Mapping</span>
+              <span class="chip">Mentor Cadence</span>
+            </div>
+            <div class="card-body" id="cardBody">
+              <!-- dynamic bullet list -->
+            </div>
+          </div>
+        </section>
+
+        <aside class="card">
+          <div class="card-inner">
+            <div class="card-header">
+              <div class="card-title">Phase Snapshot</div>
+              <div class="card-badge">What “good” looks like</div>
+            </div>
+            <div id="snapshotBody">
+              <div class="summary-grid">
+                <div class="summary-tile">
+                  <div class="summary-label">Primary objective</div>
+                  <div class="summary-value" id="summaryObjective">
+                    Protect existing CSG revenue while you learn the territory.
+                  </div>
+                </div>
+                <div class="summary-tile">
+                  <div class="summary-label">Customer focus</div>
+                  <div class="summary-value" id="summaryCustomer">
+                    Existing spenders, key run-rate accounts.
+                  </div>
+                </div>
+                <div class="summary-tile">
+                  <div class="summary-label">Internal focus</div>
+                  <div class="summary-value" id="summaryInternal">
+                    Alignment with leadership, mentors, and peers.
+                  </div>
+                </div>
+                <div class="summary-tile">
+                  <div class="summary-label">Motion type</div>
+                  <div class="summary-value" id="summaryMotion">
+                    High-velocity outreach, onsite presence, weekly cadences.
+                  </div>
+                </div>
+              </div>
+
+              <div class="kpi-row" id="kpiRow">
+                <span class="kpi-pill">Defined success metrics for CSG AE</span>
+                <span class="kpi-pill">Mapped customer base by size & spend trend</span>
+                <span class="kpi-pill">Weekly mentor / peer coaching in place</span>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+
+      <footer>
+        <div class="legend">
+          <span class="legend-item">
+            <span class="legend-dot"></span>
+            <span>Anchor activity</span>
+          </span>
+          <span class="legend-item">
+            <span class="legend-dot danger-dot"></span>
+            <span>Churn / risk signal</span>
+          </span>
+        </div>
+        <div class="footer-right">
+          Use the slider or click a phase to move between 0–30, 31–60, and 61–90 days.
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <script>
+    const phases = {
+      30: {
+        title: "Phase 1 · Learn Fast, Protect Run-Rate",
+        window: "Days 0–30",
+        chips: [
+          { label: "Run-rate Protection", type: "primary" },
+          { label: "Customer Mapping", type: "secondary" },
+          { label: "Leadership Alignment", type: "default" },
+          { label: "Mentor Cadence", type: "default" }
+        ],
+        bullets: [
+          {
+            text: "Align with leadership on expectations, key metrics, and definition of success for a CSG AE",
+            anchor: true
+          },
+          {
+            text: "Map existing customer base by size, spend trend, AMO and solution mix (PCs, peripherals, services)"
+          },
+          {
+            text: "Prioritize existing spenders to protect and grow current run-rate before net-new pursuits"
+          },
+          {
+            text: "Drive high-velocity outreach. On site with every customer (even if just a donut drop off)."
+          },
+          {
+            text: "Position Dell as a partner for end-user modernization, lifecycle management, and device-as-a-service"
+          },
+          {
+            text: "Define customer specific KPIs based on what they value"
+          },
+          {
+            text: "Establish simple weekly cadences with mentors and peers for coaching, deal review, and activity checkpoints"
+          },
+          {
+            text: "Speak directly to churn and the industry",
+            risk: true
+          }
+        ],
+        summary: {
+          objective: "Protect existing CSG revenue while you learn the territory.",
+          customer: "Existing spenders and top run-rate accounts.",
+          internal: "Tight alignment with leadership, mentors, and peers.",
+          motion: "High-velocity outreach, onsite presence, weekly check-ins."
+        },
+        kpis: [
+          "Success metrics for CSG AE defined & agreed",
+          "Customer base mapped by size, trend, AMO, and mix",
+          "Top run-rate customers prioritized and contacted",
+          "Weekly mentor & peer cadences running"
+        ]
+      },
+      60: {
+        title: "Phase 2 · Tell the Story, Build Pipeline",
+        window: "Days 31–60",
+        chips: [
+          { label: "Pipeline Build", type: "primary" },
+          { label: "Value Narrative", type: "secondary" },
+          { label: "Discovery", type: "default" },
+          { label: "Partner Alignment", type: "default" }
+        ],
+        bullets: [
+          {
+            text: "Deepen discovery with higher-potential customers on end-user strategy, refresh cycles, and support model",
+            anchor: true
+          },
+          {
+            text: "Build and refine a clear value narrative around CSG: productivity, security, manageability, and services"
+          },
+          {
+            text: "Identify and qualify near-term CSG opportunities (refresh, add-ons, attach services, PCaaS)"
+          },
+          {
+            text: "Meet with key partners to understand the specific value they bring to each customer, and validate with the customer whether that value is recognized, realized, and aligned to their priorities."
+          },
+          {
+            text: "Create a basic pipeline view by customer size, deal value, and solution area, and review regularly with leadership"
+          },
+          {
+            text: "Engage technical and specialist resources selectively to shape stronger CSG solutions"
+          },
+          {
+            text: "Introduce low-risk evaluations (e.g., limited pilots, assessments, Seeds, Try and Buys) to de-risk decisions and accelerate cycles"
+          }
+        ],
+        summary: {
+          objective: "Translate discovery into a visible, reviewable CSG pipeline.",
+          customer: "Higher-potential customers with upcoming refresh or growth.",
+          internal: "Partner, specialist, and technical alignment on key plays.",
+          motion: "Storytelling, structured discovery, and qualified pipeline build."
+        },
+        kpis: [
+          "Documented CSG value narrative in customer language",
+          "Qualified near-term CSG opportunities by stage & value",
+          "Pipeline view by customer size and solution area",
+          "Partner motions mapped and validated with customers"
+        ]
+      },
+      90: {
+        title: "Phase 3 · Close Wins, Expand, and Operationalize",
+        window: "Days 61–90",
+        chips: [
+          { label: "Closed-Won CSG", type: "primary" },
+          { label: "QBR Rhythm", type: "secondary" },
+          { label: "Growth Plan", type: "default" },
+          { label: "Operating Rhythm", type: "default" }
+        ],
+        bullets: [
+          {
+            text: "Convert early opportunities and pilots into closed-won CSG deals with clear value stories",
+            anchor: true
+          },
+          {
+            text: "Build simple Now / Next / Later QBRs for key customers and call out KPIs"
+          },
+          {
+            text: "Define concrete 12–24 month CSG growth plans for stronger relationships (refresh, upsell, cross-sell, services attach)"
+          },
+          {
+            text: "Formalize a repeatable operating rhythm: territory review, pipeline review, and outbound/prospecting blocks"
+          },
+          {
+            text: "Align with partners and internal teams on joint motions where appropriate to extend reach and coverage"
+          },
+          {
+            text: "Track and share progress by activity trend, pipeline coverage vs. target, and early “anchor wins” to demonstrate momentum"
+          }
+        ],
+        summary: {
+          objective: "Turn pilots and early deals into visible wins and a repeatable motion.",
+          customer: "Key relationships ready for multi-year CSG growth plans.",
+          internal: "Consistent operating rhythm with partners and internal teams.",
+          motion: "Closing, QBRs, and codified 12–24 month growth plans."
+        },
+        kpis: [
+          "Closed-won CSG deals from early opportunities",
+          "QBRs delivered with Now / Next / Later and KPIs",
+          "12–24 month CSG growth plans documented for key accounts",
+          "Operating rhythm established (territory, pipeline, outbound)",
+          "Anchor wins and coverage vs. target regularly shared"
+        ]
+      }
+    };
+
+    const daySlider = document.getElementById("daySlider");
+    const dayOutput = document.getElementById("dayOutput");
+    const cardTitle = document.getElementById("cardTitle");
+    const cardWindow = document.getElementById("cardWindow");
+    const cardBody = document.getElementById("cardBody");
+    const chipRow = document.getElementById("chipRow");
+    const summaryObjective = document.getElementById("summaryObjective");
+    const summaryCustomer = document.getElementById("summaryCustomer");
+    const summaryInternal = document.getElementById("summaryInternal");
+    const summaryMotion = document.getElementById("summaryMotion");
+    const kpiRow = document.getElementById("kpiRow");
+    const phaseChips = document.querySelectorAll("[data-phase-chip]");
+    const timelineSegments = document.querySelectorAll(".timeline-segment");
+    const progress30 = document.getElementById("progress30");
+    const progress60 = document.getElementById("progress60");
+    const progress90 = document.getElementById("progress90");
+
+    function getPhaseFromDay(day) {
+      if (day <= 30) return 30;
+      if (day <= 60) return 60;
+      return 90;
+    }
+
+    function updateProgressBars(day) {
+      let p30 = 0, p60 = 0, p90 = 0;
+      if (day <= 30) {
+        p30 = (day / 30) * 100;
+      } else if (day <= 60) {
+        p30 = 100;
+        p60 = ((day - 30) / 30) * 100;
+      } else {
+        p30 = 100;
+        p60 = 100;
+        p90 = ((day - 60) / 30) * 100;
+      }
+      progress30.style.width = p30 + "%";
+      progress60.style.width = p60 + "%";
+      progress90.style.width = p90 + "%";
+    }
+
+    function renderPhase(phaseKey) {
+      const phase = phases[phaseKey];
+      if (!phase) return;
+
+      cardTitle.textContent = phase.title;
+      cardWindow.textContent = phase.window;
+
+      chipRow.innerHTML = "";
+      phase.chips.forEach(chip => {
+        const span = document.createElement("span");
+        span.className = "chip" + (chip.type === "primary" ? " primary" : chip.type === "secondary" ? " secondary" : "");
+        span.textContent = chip.label;
+        chipRow.appendChild(span);
+      });
+
+      cardBody.innerHTML = "";
+      const ul = document.createElement("ul");
+      ul.className = "phase-list";
+
+      phase.bullets.forEach((item, index) => {
+        const li = document.createElement("li");
+        const icon = document.createElement("div");
+        icon.className = "bullet-icon";
+        icon.textContent = item.anchor ? "★" : index + 1;
+        if (item.risk) {
+          icon.style.background = "radial-gradient(circle at 30% 20%, #ff6b6b, #b31237)";
+          icon.style.color = "#fff";
+        }
+
+        const textWrap = document.createElement("div");
+        textWrap.className = "bullet-text";
+        textWrap.textContent = item.text;
+
+        li.appendChild(icon);
+        li.appendChild(textWrap);
+        ul.appendChild(li);
+      });
+
+      cardBody.appendChild(ul);
+
+      summaryObjective.textContent = phase.summary.objective;
+      summaryCustomer.textContent = phase.summary.customer;
+      summaryInternal.textContent = phase.summary.internal;
+      summaryMotion.textContent = phase.summary.motion;
+
+      kpiRow.innerHTML = "";
+      phase.kpis.forEach(k => {
+        const span = document.createElement("span");
+        span.className = "kpi-pill";
+        span.textContent = k;
+        kpiRow.appendChild(span);
+      });
+
+      phaseChips.forEach(chip => {
+        chip.classList.toggle("active", Number(chip.dataset.phaseChip) === Number(phaseKey));
+      });
+
+      timelineSegments.forEach(seg => {
+        seg.classList.toggle("active", Number(seg.dataset.phase) === Number(phaseKey));
+      });
+    }
+
+    daySlider.addEventListener("input", () => {
+      const day = Number(daySlider.value);
+      dayOutput.textContent = "Day " + day;
+      const phase = getPhaseFromDay(day);
+      renderPhase(phase);
+      updateProgressBars(day);
+    });
+
+    phaseChips.forEach(chip => {
+      chip.addEventListener("click", () => {
+        const phaseKey = Number(chip.dataset.phaseChip);
+        renderPhase(phaseKey);
+        if (phaseKey === 30) daySlider.value = 0;
+        else if (phaseKey === 60) daySlider.value = 45;
+        else daySlider.value = 75;
+        dayOutput.textContent = "Day " + daySlider.value;
+        updateProgressBars(Number(daySlider.value));
+      });
+    });
+
+    timelineSegments.forEach(seg => {
+      seg.addEventListener("click", () => {
+        const phaseKey = Number(seg.dataset.phase);
+        renderPhase(phaseKey);
+        if (phaseKey === 30) daySlider.value = 15;
+        else if (phaseKey === 60) daySlider.value = 45;
+        else daySlider.value = 75;
+        dayOutput.textContent = "Day " + daySlider.value;
+        updateProgressBars(Number(daySlider.value));
+      });
+    });
+
+    renderPhase(30);
+    updateProgressBars(0);
+  </script>
+</body>
+</html>
